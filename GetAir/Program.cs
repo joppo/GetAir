@@ -24,27 +24,36 @@ namespace GetAir
         {
             List<Station> stations = IO.ReadData.GetStations();
 
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(stations[0].Url);
-            req.Timeout = Constants.request_timeout;
-            try
+            for (int i = 0; i < stations.Count; i++)
             {
-                using (WebResponse res = (HttpWebResponse)req.GetResponse())
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(stations[i].Url);
+                req.Timeout = Constants.request_timeout;
+                try
                 {
-                    Stream s = res.GetResponseStream();
-                    StreamReader sr = new StreamReader(s);
-                    string result = sr.ReadToEnd();
-                    
-                    result = result.Replace("[[", "[");
-                    result = result.Replace("]]", "]");
+                    using (WebResponse res = (HttpWebResponse)req.GetResponse())
+                    {
+                        Stream s = res.GetResponseStream();
+                        StreamReader sr = new StreamReader(s);
+                        string result = sr.ReadToEnd();
 
-                    Main_JSON station_data = JsonConvert.DeserializeObject<Main_JSON>(result);
-                    
+                        //sample result at this point
+                        //{"name":"AirThingsCalibratedData","columns":["time","CO","HUMIDITY","NO2","O3","PM10","PM2","PRESSURE","SO2","TEMP"],"values":[["2020-01-10T09:00:00Z",1.2229588296440941,55.414599999999993,73.9002517059506,14.136845902111464,129.138192,63.008696799999996,961.8864,20.717822193709519,3.17]]}
+
+                        result = result.Replace("[[", "[");
+                        result = result.Replace("]]", "]");
+
+                        Main_JSON station_data = JsonConvert.DeserializeObject<Main_JSON>(result);
+                        Measurement m = Transformer.ConvertJSONToMeasurement(station_data);
+                        m.Station_id = stations[i].Id;
+
+                    }
                 }
-            } catch(Exception eeeeeeeeeeeeeeee)
-            {
-                
-            }
+                catch (Exception eeeeeeeeeeeeeeee)
+                {
 
+                }
+            }
+            
         }
     }
 }

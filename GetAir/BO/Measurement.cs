@@ -14,7 +14,8 @@ namespace GetAir.BO
         public float PM10 { get; set; }
         public float PM2 { get; set; }
         public float Pressure { get; set; }
-        public float S02 { get; set; }
+        public float SO2 { get; set; }
         public float Temperature { get; set; }
+        public int Station_id { get; set; }
     }
 }

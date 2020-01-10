@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using GetAir.JSON;
 
 namespace GetAir.BO
 {
@@ -35,6 +36,23 @@ namespace GetAir.BO
             }
 
             return stations;
+        }
+
+        public static Measurement ConvertJSONToMeasurement(Main_JSON generic)
+        {
+            Measurement mm = new Measurement();
+            mm.Time = DateTime.Parse(generic.values[0]);
+            mm.CO = float.Parse(generic.values[1]);
+            mm.Humidity = float.Parse(generic.values[2]);
+            mm.NO2 = float.Parse(generic.values[3]);
+            mm.O3 = float.Parse(generic.values[4]);
+            mm.PM10 = float.Parse(generic.values[5]);
+            mm.PM2 = float.Parse(generic.values[6]);
+            mm.Pressure = float.Parse(generic.values[7]);
+            mm.SO2 = float.Parse(generic.values[8]);
+            mm.Temperature = float.Parse(generic.values[9]);
+
+            return mm;
         }
     }
 }
