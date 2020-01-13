@@ -6,6 +6,7 @@ using System.Net;
 using GetAir.JSON;
 using System.Web;
 using Newtonsoft.Json;
+using GetAir.IO;
 
 namespace GetAir
 {
@@ -25,7 +26,7 @@ namespace GetAir
             List<Station> stations = IO.ReadData.GetStations();
 
             for (int i = 0; i < stations.Count; i++)
-            {
+            { 
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(stations[i].Url);
                 req.Timeout = Constants.request_timeout;
                 try
@@ -45,6 +46,17 @@ namespace GetAir
                         Main_JSON station_data = JsonConvert.DeserializeObject<Main_JSON>(result);
                         Measurement m = Transformer.ConvertJSONToMeasurement(station_data);
                         m.Station_id = stations[i].Id;
+
+                        string err_message = string.Empty;
+                        int insert_result = InsertData.InsertMeasurement(m, ref err_message);
+                        if (insert_result != 1)
+                        {
+                            //insert in err log table.
+                            //err_message holds the err value if any.
+                            string insertion_error_message = string.Empty;
+                            InsertData.InsertError(err_message, result, ref insertion_error_message);
+                        }
+
 
                     }
                 }
