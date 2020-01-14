@@ -38,19 +38,26 @@ namespace GetAir.BO
             return stations;
         }
 
-        public static Measurement ConvertJSONToMeasurement(Main_JSON generic)
+        public static Measurement ConvertArraysToMeasurement(Main_JSON d)
         {
+            JSONMeasurement jm = new JSONMeasurement();
             Measurement mm = new Measurement();
-            mm.Time = DateTime.Parse(generic.values[0]);
-            mm.CO = float.Parse(generic.values[1]);
-            mm.Humidity = float.Parse(generic.values[2]);
-            mm.NO2 = float.Parse(generic.values[3]);
-            mm.O3 = float.Parse(generic.values[4]);
-            mm.PM10 = float.Parse(generic.values[5]);
-            mm.PM2 = float.Parse(generic.values[6]);
-            mm.Pressure = float.Parse(generic.values[7]);
-            mm.SO2 = float.Parse(generic.values[8]);
-            mm.Temperature = float.Parse(generic.values[9]);
+
+            for (int i = 0; i < d.columns.Count; i++)
+            {
+                jm[d.columns[i]] = d.values[i];
+            }
+
+            mm.Time = (jm.time == null) ? DateTime.MinValue : DateTime.Parse(jm.time);
+            mm.CO = (jm.CO == null) ? 0 : float.Parse(jm.CO);
+            mm.Humidity = (jm.HUMIDITY == null) ? 0 : float.Parse(jm.HUMIDITY);
+            mm.NO2 = (jm.NO2 == null) ? 0 : float.Parse(jm.NO2);
+            mm.O3 = (jm.O3 == null) ? 0 : float.Parse(jm.O3);
+            mm.PM10 = (jm.PM10 == null) ? 0 : float.Parse(jm.PM10);
+            mm.PM2 = (jm.PM2 == null) ? 0 : float.Parse(jm.PM2);
+            mm.Pressure = (jm.PRESSURE == null) ? 0 : float.Parse(jm.PRESSURE);
+            mm.SO2 = (jm.SO2 == null) ? 0 : float.Parse(jm.SO2);
+            mm.Temperature = (jm.TEMP == null) ? 0 : float.Parse(jm.TEMP);
 
             return mm;
         }

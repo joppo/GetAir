@@ -18,15 +18,18 @@ namespace GetAir
             Main_JSON sample = JsonConvert.DeserializeObject<Main_JSON>(test);
 
             GetAirData();
-            Console.WriteLine("Hello World!");
+
+            
         }
 
         private static void GetAirData()
         {
+
+            //Console.WriteLine("starting");
             List<Station> stations = IO.ReadData.GetStations();
 
             for (int i = 0; i < stations.Count; i++)
-            { 
+            {
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(stations[i].Url);
                 req.Timeout = Constants.request_timeout;
                 try
@@ -44,7 +47,7 @@ namespace GetAir
                         result = result.Replace("]]", "]");
 
                         Main_JSON station_data = JsonConvert.DeserializeObject<Main_JSON>(result);
-                        Measurement m = Transformer.ConvertJSONToMeasurement(station_data);
+                        Measurement m = Transformer.ConvertArraysToMeasurement(station_data);
                         m.Station_id = stations[i].Id;
 
                         string err_message = string.Empty;
@@ -60,12 +63,13 @@ namespace GetAir
 
                     }
                 }
-                catch (Exception eeeeeeeeeeeeeeee)
+                catch (Exception err_msg)
                 {
-
+                    Console.WriteLine(err_msg);
+                    //Console.ReadLine();
                 }
             }
-            
+
         }
     }
 }

@@ -3,8 +3,6 @@ C:\z\p\GetAir\GetAir\bin\Debug\netcoreapp2.1\GetAir.runtimeconfig.json
 C:\z\p\GetAir\GetAir\bin\Debug\netcoreapp2.1\GetAir.runtimeconfig.dev.json
 C:\z\p\GetAir\GetAir\bin\Debug\netcoreapp2.1\GetAir.dll
 C:\z\p\GetAir\GetAir\bin\Debug\netcoreapp2.1\GetAir.pdb
-C:\z\p\GetAir\GetAir\obj\Debug\netcoreapp2.1\GetAir.csprojAssemblyReference.cache
-C:\z\p\GetAir\GetAir\obj\Debug\netcoreapp2.1\GetAir.csproj.CoreCompileInputs.cache
 C:\z\p\GetAir\GetAir\obj\Debug\netcoreapp2.1\GetAir.AssemblyInfoInputs.cache
 C:\z\p\GetAir\GetAir\obj\Debug\netcoreapp2.1\GetAir.AssemblyInfo.cs
 C:\z\p\GetAir\GetAir\obj\Debug\netcoreapp2.1\GetAir.dll
